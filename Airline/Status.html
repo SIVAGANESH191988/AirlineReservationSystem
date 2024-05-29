@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flight Status - Airline Reservation System</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Flight Status</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+    <section>
+        <form action="flight-status-results.html" method="get">
+            <label for="flightNumber">Flight Number:</label>
+            <input type="text" id="flightNumber" name="flightNumber" required><br>
+            <input type="submit" value="Check Status">
+        </form>
+        <div id="statusResults">
+            <!-- Status results will be displayed here -->
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Airline Reservation System</p>
+    </footer>
+</body>
+</html>
