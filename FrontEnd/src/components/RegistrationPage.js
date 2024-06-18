@@ -20,7 +20,7 @@ function RegistrationPage() {
   };
 
   return (
-    <div>
+    <div className='register-container'>
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <input name="username" type="text" placeholder="Username" value={form.username} onChange={handleChange} />

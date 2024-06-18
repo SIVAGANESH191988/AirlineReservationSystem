@@ -24,7 +24,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div>
+        <div className='register-container'>
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <input type="text" name="username" placeholder="Username" onChange={handleChange} />
