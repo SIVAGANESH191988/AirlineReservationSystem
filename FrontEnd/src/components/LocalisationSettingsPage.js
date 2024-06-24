@@ -15,7 +15,7 @@ const LocalisationSettingsPage = ({ userID }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Implement API call to save settings
+       
     };
 
     return (
