@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addAirline } from '../Api/airlines'; // Adjust the path as per your project structure
+import { addAirline } from '../Api/airlines';
 
 const AdminDashboard = () => {
     const [airlineData, setAirlineData] = useState({
