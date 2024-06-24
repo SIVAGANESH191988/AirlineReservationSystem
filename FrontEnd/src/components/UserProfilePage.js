@@ -1,5 +1,7 @@
+// src/components/UserProfilePage.js
+
 import React, { useState, useEffect } from 'react';
-import { getUserProfile, updateUserProfile } from '../api/users';
+import { getUserProfile, updateUserProfile } from '../api/users'; // Correct import statement
 
 const UserProfilePage = ({ userId }) => {
     const [user, setUser] = useState(null);
@@ -18,7 +20,7 @@ const UserProfilePage = ({ userId }) => {
             try {
                 const userData = await getUserProfile(userId);
                 setUser(userData);
-                setFormData(userData);
+                setFormData(userData); // Initialize form data with fetched user data
             } catch (error) {
                 console.error('Error fetching user profile:', error);
             }
