@@ -20,7 +20,7 @@ const UserProfilePage = ({ userId }) => {
             try {
                 const userData = await getUserProfile(userId);
                 setUser(userData);
-                setFormData(userData); // Initialize form data with fetched user data
+                setFormData(userData); 
             } catch (error) {
                 console.error('Error fetching user profile:', error);
             }
