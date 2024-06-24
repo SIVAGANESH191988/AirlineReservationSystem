@@ -13,21 +13,21 @@ function FlightSearchPage() {
   const handleSearch = async () => {
     try {
       const response = await axios.get('http://localhost:8080/api/flights', { params: criteria });
-      console.log('Flight search response:', response.data); // Log response to inspect the structure
+      console.log('Flight search response:', response.data);
       setFlights(response.data);
-      setError(null); // Clear error state on successful fetch
+      setError(null); 
     } catch (error) {
       console.error('Error searching for flights', error);
-      setError('Error fetching flights. Please try again later.'); // Set error state
-      setFlights([]); // Reset flights state
+      setError('Error fetching flights. Please try again later.'); 
+      setFlights([]); 
     }
   };
 
   const handleBooking = (flightId) => {
-    // Implement flight booking logic here (e.g., navigate to booking page)
+     
     console.log(`Booking flight with ID ${flightId}`);
-    // Example: Redirect to booking page using React Router
-    // history.push(`/book-flight/${flightId}`);
+    
+     history.push(`/book-flight/${flightId}`);
   };
 
   return (
