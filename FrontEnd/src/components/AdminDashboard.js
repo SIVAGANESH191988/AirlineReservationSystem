@@ -1,70 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { getFlights, addFlight, deleteFlight } from '../Api/flights';
+import React, { useState } from 'react';
+import { addAirline } from '../Api/airlines'; // Adjust the path as per your project structure
 
 const AdminDashboard = () => {
-    const [flights, setFlights] = useState([]);
-    const [newFlight, setNewFlight] = useState({
-        airlineID: '',
-        departureCity: '',
-        arrivalCity: '',
-        departureTime: '',
-        totalSeats: 0
+    const [airlineData, setAirlineData] = useState({
+        name: '',
+        // Add other fields as needed
     });
+    const [token, setToken] = useState(''); // State for authentication token
 
-    useEffect(() => {
-        getFlights().then(response => {
-            setFlights(response.data);
-        });
-    }, []);
+    const handleAddAirline = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await addAirline(airlineData, token);
+            console.log('Airline added:', response); // Log response if needed
+            // Optionally, update state or perform other actions upon success
+        } catch (error) {
+            console.error('Failed to add airline:', error);
+            // Handle error, possibly show a message to the user
+        }
+    };
 
     const handleChange = (e) => {
-        setNewFlight({
-            ...newFlight,
+        setAirlineData({
+            ...airlineData,
             [e.target.name]: e.target.value
-        });
-    };
-
-    const handleAddFlight = (e) => {
-        e.preventDefault();
-        addFlight(newFlight).then(response => {
-            setFlights([...flights, response.data]);
-        }).catch(error => {
-            alert('Add flight failed');
-        });
-    };
-
-    const handleDeleteFlight = (id) => {
-        deleteFlight(id).then(response => {
-            setFlights(flights.filter(f => f.flightID !== id));
-        }).catch(error => {
-            alert('Delete flight failed');
         });
     };
 
     return (
         <div>
-            <h2>Admin Dashboard</h2>
-            <div>
-                <form onSubmit={handleAddFlight}>
-                    <input type="text" name="airlineID" placeholder="Airline ID" onChange={handleChange} />
-                    <input type="text" name="departureCity" placeholder="Departure City" onChange={handleChange} />
-                    <input type="text" name="arrivalCity" placeholder="Arrival City" onChange={handleChange} />
-                    <input type="datetime-local" name="departureTime" placeholder="Departure Time" onChange={handleChange} />
-                    <input type="number" name="totalSeats" placeholder="Total Seats" onChange={handleChange} />
-                    <button type="submit">Add Flight</button>
-                </form>
-            </div>
-            <div>
-                {flights.map(flight => (
-                    <div key={flight.flightID}>
-                        <p>Flight ID: {flight.flightID}</p>
-                        <p>From: {flight.departureCity}</p>
-                        <p>To: {flight.arrivalCity}</p>
-                        <p>Departure Time: {new Date(flight.departureTime).toLocaleString()}</p>
-                        <button onClick={() => handleDeleteFlight(flight.flightID)}>Delete</button>
-                    </div>
-                ))}
-            </div>
+            <h2>Add Airline</h2>
+            <form onSubmit={handleAddAirline}>
+                <input type="text" name="name" value={airlineData.name} onChange={handleChange} placeholder="Airline Name" />
+                {/* Add other input fields as per your airline data structure */}
+                <button type="submit">Add Airline</button>
+            </form>
         </div>
     );
 };

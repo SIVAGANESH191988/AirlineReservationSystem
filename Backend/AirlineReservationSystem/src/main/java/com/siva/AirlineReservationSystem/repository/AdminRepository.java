@@ -1,10 +1,10 @@
 package com.siva.AirlineReservationSystem.repository;
 
+import com.siva.AirlineReservationSystem.entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.siva.AirlineReservationSystem.entity.Admin;
+import java.util.Optional;
 
-public interface AdminRepository extends JpaRepository<Admin, Integer> {
-
-
+public interface AdminRepository extends JpaRepository<Admin, Long> {
+    Optional<Admin> findByUsername(String username);
 }

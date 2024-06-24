@@ -1,12 +1,6 @@
 package com.siva.AirlineReservationSystem.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Airlines")
@@ -16,10 +10,10 @@ public class Airline {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int airlineID;
 
-    @Column(nullable = false)
-    private String airlineName;
+    @Column( unique = true, nullable = false)
+    private String name;
 
- 
+    // Getters and Setters
     public int getAirlineID() {
         return airlineID;
     }
@@ -28,11 +22,11 @@ public class Airline {
         this.airlineID = airlineID;
     }
 
-    public String getAirlineName() {
-        return airlineName;
+    public String getName() {
+        return name;
     }
 
-    public void setAirlineName(String airlineName) {
-        this.airlineName = airlineName;
+    public void setName(String name) {
+        this.name = name;
     }
 }

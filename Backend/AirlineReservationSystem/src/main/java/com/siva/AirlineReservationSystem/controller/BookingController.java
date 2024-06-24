@@ -6,22 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/bookings")
+@RequestMapping("/api")
 public class BookingController {
 
     @Autowired
     private BookingService bookingService;
 
-    @GetMapping
-    public ResponseEntity<List<Booking>> getAllBookings() {
-        return ResponseEntity.ok(bookingService.getAllBookings());
+    @PostMapping("/bookings")
+    public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
+        return ResponseEntity.ok(bookingService.createBooking(booking));
     }
 
-    @PostMapping
-    public ResponseEntity<Booking> addBooking(@RequestBody Booking booking) {
-        return ResponseEntity.ok(bookingService.saveBooking(booking));
+    @GetMapping("/bookings/{id}")
+    public ResponseEntity<Booking> getBookingById(@PathVariable Long id) {
+        return ResponseEntity.ok(bookingService.getBookingById(id).orElseThrow(() -> new RuntimeException("Booking not found")));
+    }
+
+    @DeleteMapping("/bookings/{id}")
+    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
+        bookingService.deleteBooking(id);
+        return ResponseEntity.noContent().build();
     }
 }

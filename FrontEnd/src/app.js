@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import RegistrationPage from './components/RegistrationPage';
 import LoginPage from './components/LoginPage';
@@ -10,29 +10,30 @@ import UserProfilePage from './components/UserProfilePage';
 import PaymentPage from './components/PaymentPage';
 import BookingManagementPage from './components/BookingManagementPage';
 import FlightStatusPage from './components/FlightStatusPage';
-
 import AdminDashboard from './components/AdminDashboard';
+import AdminLogin from './components/AdminLogin';
+import AdminRegister from './components/AdminRegister';
 import LocalisationSettingsPage from './components/LocalisationSettingsPage';
 
 const App = () => {
-    return (
-        <Router>
-            <Switch>
-                <Route path="/" exact component={HomePage} />
-                <Route path="/register" component={RegistrationPage} />
-                <Route path="/login" component={LoginPage} />
-                <Route path="/search-flights" component={FlightSearchPage} />
-                <Route path="/flight-details" component={FlightDetailsPage} />
-                <Route path="/booking-confirmation" component={BookingConfirmationPage} />
-                <Route path="/user-profile" component={UserProfilePage} />
-                <Route path="/payment" component={PaymentPage} />
-                <Route path="/manage-bookings" component={BookingManagementPage} />
-                <Route path="/flight-status" component={FlightStatusPage} />
-                <Route path="/admin-dashboard" component={AdminDashboard} />
-                <Route path="/localisation-settings" component={LocalisationSettingsPage} />
-            </Switch>
-        </Router>
-    );
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/register" element={<RegistrationPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/search-flights" element={<FlightSearchPage />} />
+      <Route path="/flight-details" element={<FlightDetailsPage />} />
+      <Route path="/booking-confirmation/:bookingId" element={<BookingConfirmationPage />} />
+      <Route path="/user-profile" element={<UserProfilePage />} />
+      <Route path="/payment" element={<PaymentPage />} />
+      <Route path="/manage-bookings" element={<BookingManagementPage />} />
+      <Route path="/flight-status" element={<FlightStatusPage />} />
+      <Route path="/admin-dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/register" element={<AdminRegister />} />
+      <Route path="/localisation-settings" element={<LocalisationSettingsPage />} />
+    </Routes>
+  );
 };
 
 export default App;
