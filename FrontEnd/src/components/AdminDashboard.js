@@ -4,19 +4,17 @@ import { addAirline } from '../Api/airlines'; // Adjust the path as per your pro
 const AdminDashboard = () => {
     const [airlineData, setAirlineData] = useState({
         name: '',
-        // Add other fields as needed
+        
     });
-    const [token, setToken] = useState(''); // State for authentication token
-
+    const [token, setToken] = useState(''); 
     const handleAddAirline = async (e) => {
         e.preventDefault();
         try {
             const response = await addAirline(airlineData, token);
-            console.log('Airline added:', response); // Log response if needed
-            // Optionally, update state or perform other actions upon success
+            console.log('Airline added:', response); 
         } catch (error) {
             console.error('Failed to add airline:', error);
-            // Handle error, possibly show a message to the user
+            
         }
     };
 
