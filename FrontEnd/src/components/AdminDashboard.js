@@ -30,7 +30,7 @@ const AdminDashboard = () => {
             <h2>Add Airline</h2>
             <form onSubmit={handleAddAirline}>
                 <input type="text" name="name" value={airlineData.name} onChange={handleChange} placeholder="Airline Name" />
-                {/* Add other input fields as per your airline data structure */}
+               
                 <button type="submit">Add Airline</button>
             </form>
         </div>
