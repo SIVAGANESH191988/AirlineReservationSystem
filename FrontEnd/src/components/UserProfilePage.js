@@ -1,7 +1,7 @@
-// src/components/UserProfilePage.js
+
 
 import React, { useState, useEffect } from 'react';
-import { getUserProfile, updateUserProfile } from '../api/users'; // Correct import statement
+import { getUserProfile, updateUserProfile } from '../api/users';
 
 const UserProfilePage = ({ userId }) => {
     const [user, setUser] = useState(null);
