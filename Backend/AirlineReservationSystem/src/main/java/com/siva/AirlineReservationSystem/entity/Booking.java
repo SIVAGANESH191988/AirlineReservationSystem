@@ -1,6 +1,8 @@
 package com.siva.AirlineReservationSystem.entity;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -91,4 +93,9 @@ public class Booking {
     public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
+
+	public void setBookingDate(LocalDateTime now) {
+		// TODO Auto-generated method stub
+		
+	}
 }

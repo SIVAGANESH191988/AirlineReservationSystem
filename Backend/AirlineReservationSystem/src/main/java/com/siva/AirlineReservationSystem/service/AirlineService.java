@@ -24,23 +24,17 @@ public class AirlineService {
     }
 
     public Airline addAirline(Airline airline) {
-        // Ensure the name is set
-        if (airline.getName() == null || airline.getName().isEmpty()) {
-            throw new IllegalArgumentException("Airline name cannot be null or empty");
-        }
         return airlineRepository.save(airline);
     }
 
     public Airline updateAirline(int id, Airline airlineDetails) {
-        Airline airline = airlineRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Airline not found for this id :: " + id));
+        Airline airline = getAirlineById(id).orElseThrow(() -> new ResourceNotFoundException("Airline not found for this id :: " + id));
         airline.setName(airlineDetails.getName());
+        
         return airlineRepository.save(airline);
     }
 
     public void deleteAirline(int id) {
-        Airline airline = airlineRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Airline not found for this id :: " + id));
-        airlineRepository.delete(airline);
+        airlineRepository.deleteById(id);
     }
 }

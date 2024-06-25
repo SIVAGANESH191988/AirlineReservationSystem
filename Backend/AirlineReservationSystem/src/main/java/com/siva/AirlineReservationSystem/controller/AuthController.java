@@ -4,6 +4,9 @@ import com.siva.AirlineReservationSystem.entity.Admin;
 import com.siva.AirlineReservationSystem.entity.User;
 import com.siva.AirlineReservationSystem.service.AdminService;
 import com.siva.AirlineReservationSystem.service.UserService;
+
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +25,8 @@ public class AuthController {
         this.adminService = adminService;
     }
 
-    // General User Registration
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
-        // Check if username or email already exists
         if (userService.findByUsername(user.getUsername()) != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
         }
@@ -33,13 +34,11 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
         }
 
-        // Save user
         userService.save(user);
 
         return ResponseEntity.ok("User registered successfully");
     }
 
-    // General User Login
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
         User user = userService.authenticate(username, password);
@@ -50,40 +49,49 @@ public class AuthController {
         }
     }
 
-    // Admin Registration (typically should be secured and restricted)
     @PostMapping("/admin/register")
     public ResponseEntity<?> registerAdmin(@RequestBody Admin admin) {
-        // Check if username already exists
-        if (adminService.findByUsername(admin.getUsername()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
+        try {
+            if (adminService.findByUsername(admin.getUsername()).isPresent()) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
+            }
+
+            adminService.save(admin);
+            return ResponseEntity.ok("Admin registered successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Admin registration failed: " + e.getMessage());
         }
-
-        // Save admin
-        adminService.save(admin);
-
-        return ResponseEntity.ok("Admin registered successfully");
     }
 
-    // Admin Login
     @PostMapping("/admin/login")
-    public ResponseEntity<?> loginAdmin(@RequestParam String username, @RequestParam String password) {
-        Admin admin = adminService.findByUsername(username).orElse(null);
-        if (admin != null && adminService.verifyPassword(password, admin.getPassword())) {
-            String token = adminService.generateToken(admin);
-            return ResponseEntity.ok(token);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+    public ResponseEntity<?> loginAdmin(@RequestBody Map<String, String> credentials) {
+        try {
+            String username = credentials.get("username");
+            String password = credentials.get("password");
+
+            Admin admin = adminService.findByUsername(username).orElse(null);
+            if (admin != null && adminService.verifyPassword(password, admin.getPassword())) {
+                String token = adminService.generateToken(admin);
+                return ResponseEntity.ok(token);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Admin login failed: " + e.getMessage());
         }
     }
 
-    // Admin Logout
     @PostMapping("/admin/logout")
     public ResponseEntity<?> logoutAdmin(@RequestHeader("Authorization") String token) {
-        if (adminService.validateToken(token)) {
-            adminService.invalidateToken(token);
-            return ResponseEntity.ok("Logout successful");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        try {
+            if (adminService.validateToken(token)) {
+                adminService.invalidateToken(token);
+                return ResponseEntity.ok("Logout successful");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Logout failed: " + e.getMessage());
         }
     }
 }
