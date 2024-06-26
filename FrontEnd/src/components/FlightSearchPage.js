@@ -12,22 +12,27 @@ function FlightSearchPage() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/flights', { params: criteria });
-      console.log('Flight search response:', response.data); // Log response to inspect the structure
+     
+      const response = await axios.get('http://localhost:8080/api/admin/flights', {
+        params: criteria,
+        headers: {
+          Authorization: token
+        }
+      });
+      console.log('Flight search response:', response.data); 
       setFlights(response.data);
-      setError(null); // Clear error state on successful fetch
+      setError(null); 
     } catch (error) {
       console.error('Error searching for flights', error);
-      setError('Error fetching flights. Please try again later.'); // Set error state
-      setFlights([]); // Reset flights state
+      setError('Error fetching flights. Please try again later.'); 
+      setFlights([]); 
     }
   };
 
   const handleBooking = (flightId) => {
-    // Implement flight booking logic here (e.g., navigate to booking page)
+    
     console.log(`Booking flight with ID ${flightId}`);
-    // Example: Redirect to booking page using React Router
-    // history.push(`/book-flight/${flightId}`);
+ 
   };
 
   return (
@@ -38,7 +43,7 @@ function FlightSearchPage() {
       <input name="travelDate" type="date" placeholder="Travel Date" value={criteria.travelDate} onChange={handleChange} />
       <button onClick={handleSearch}>Search</button>
 
-      {error && <p>{error}</p>} {/* Display error message if there is an error */}
+      {error && <p>{error}</p>} {}
 
       {flights.length > 0 && Array.isArray(flights) && (
         <ul>
@@ -53,7 +58,7 @@ function FlightSearchPage() {
         </ul>
       )}
 
-      {flights.length === 0 && !error && <p>No flights found.</p>} {/* Display message if no flights found */}
+      {flights.length === 0 && !error && <p>No flights found.</p>} {}
     </div>
   );
 }

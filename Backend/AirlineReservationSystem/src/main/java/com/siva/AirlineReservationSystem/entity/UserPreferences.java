@@ -26,10 +26,7 @@ public class UserPreferences {
 
     @OneToOne
     @JoinColumn(name = "UserID")
-    private User user; // Corrected mappedBy property
-
-    // Constructors, getters, setters
-    // Omitted for brevity
+    private User user; 
 
     public Long getUserID() {
         return userID;

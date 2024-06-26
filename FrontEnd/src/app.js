@@ -15,6 +15,7 @@ import AdminRegister from './components/AdminRegister';
 import AdminLogin from './components/AdminLogin';
 import LocalisationSettingsPage from './components/LocalisationSettingsPage';
 
+
 const App = () => {
     return (
         <Routes>

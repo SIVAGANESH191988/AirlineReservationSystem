@@ -13,7 +13,7 @@ public class Airline {
     @Column( unique = true, nullable = false)
     private String name;
 
-    // Getters and Setters
+ 
     public int getAirlineID() {
         return airlineID;
     }

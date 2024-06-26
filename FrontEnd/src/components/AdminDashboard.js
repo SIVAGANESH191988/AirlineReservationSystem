@@ -5,16 +5,14 @@ import {
     addAirline,
     updateAirline,
     deleteAirline,
-    getAirlineById
-} from '../api/airlines'; // Assuming these are existing airline API functions
-import {
-    getFlights,
+    getAirlineById,
+    getAllFlights,
     addFlight,
+    updateFlight,
     deleteFlight,
-    getFlightById,
-    updateFlight
-} from '../api/flights'; // Import flight API functions
-import './AdminDashboard.css'; // Import CSS file
+    getFlightById
+} from '../Api/AdminOp';
+import '../components/AdminDashboard.css';
 
 const AdminDashboard = () => {
     const [airlines, setAirlines] = useState([]);
@@ -24,11 +22,12 @@ const AdminDashboard = () => {
     const [selectedFlight, setSelectedFlight] = useState(null);
     const [airlineData, setAirlineData] = useState({ name: '' });
     const [flightData, setFlightData] = useState({
-        airlineId: '', // Use airlineId instead of airline object
         departureCity: '',
         arrivalCity: '',
+        airlineId: '',
         departureTime: '',
-        totalSeats: 0 // Assuming totalSeats is required
+        totalSeats: '',
+        availableSeats: ''
     });
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
@@ -46,11 +45,7 @@ const AdminDashboard = () => {
     const loadAirlines = async () => {
         try {
             const data = await getAllAirlines(token);
-            if (Array.isArray(data)) {
-                setAirlines(data);
-            } else {
-                throw new Error('Invalid data format');
-            }
+            setAirlines(data);
         } catch (error) {
             console.error('Failed to load airlines:', error);
             setMessage('Failed to load airlines. Please try again.');
@@ -59,12 +54,8 @@ const AdminDashboard = () => {
 
     const loadFlights = async () => {
         try {
-            const data = await getFlights(token);
-            if (Array.isArray(data)) {
-                setFlights(data);
-            } else {
-                throw new Error('Invalid data format');
-            }
+            const data = await getAllFlights(token);
+            setFlights(data);
         } catch (error) {
             console.error('Failed to load flights:', error);
             setMessage('Failed to load flights. Please try again.');
@@ -93,38 +84,43 @@ const AdminDashboard = () => {
         }
     };
 
-    const handleAddAirline = async () => {
+    const handleAddAirline = async (event) => {
+        event.preventDefault();
         try {
-            await addAirline(airlineData, token);
+            const response = await addAirline(airlineData, token);
             setMessage('Airline added successfully!');
+            setAirlineData({ name: '' });
             loadAirlines();
+            setCurrentAction('view');
         } catch (error) {
             console.error('Failed to add airline:', error);
             setMessage('Failed to add airline. Please try again.');
         }
     };
 
-    const handleAddFlight = async () => {
+    const handleAddFlight = async (event) => {
+        event.preventDefault();
         try {
-            await addFlight(flightData, token);
+            const response = await addFlight({
+                ...flightData,
+                airlineId: flightData.airlineId // Ensure it's parsed as integer if needed
+            }, token);
+            console.log('Flight added:', response);
             setMessage('Flight added successfully!');
             loadFlights();
+            setCurrentAction('view');
         } catch (error) {
             console.error('Failed to add flight:', error);
             setMessage('Failed to add flight. Please try again.');
         }
     };
-
+    
     const handleEditAirline = async (id) => {
         try {
             const data = await getAirlineById(id, token);
-            if (data && data.id && data.name) {
-                setSelectedAirline(data);
-                setAirlineData({ name: data.name });
-                setCurrentAction('edit');
-            } else {
-                throw new Error('Invalid airline data');
-            }
+            setSelectedAirline(data);
+            setAirlineData({ name: data.name });
+            setCurrentAction('editAirline');
         } catch (error) {
             console.error('Failed to load airline:', error);
             setMessage('Failed to load airline. Please try again.');
@@ -134,19 +130,16 @@ const AdminDashboard = () => {
     const handleEditFlight = async (id) => {
         try {
             const data = await getFlightById(id, token);
-            if (data && data.id && data.airlineId) { // Adjusted to use airlineId instead of airline object
-                setSelectedFlight(data);
-                setFlightData({
-                    airlineId: data.airlineId.toString(), // Ensure airlineId is string for select input compatibility
-                    departureCity: data.departureCity,
-                    arrivalCity: data.arrivalCity,
-                    departureTime: data.departureTime,
-                    totalSeats: data.totalSeats // Assuming totalSeats is required
-                });
-                setCurrentAction('editFlight');
-            } else {
-                throw new Error('Invalid flight data');
-            }
+            setSelectedFlight(data);
+            setFlightData({
+                departureCity: data.departureCity,
+                arrivalCity: data.arrivalCity,
+                airlineId: data.airline.airlineID,
+                departureTime: data.departureTime,
+                totalSeats: data.totalSeats,
+                availableSeats: data.availableSeats
+            });
+            setCurrentAction('editFlight');
         } catch (error) {
             console.error('Failed to load flight:', error);
             setMessage('Failed to load flight. Please try again.');
@@ -161,10 +154,39 @@ const AdminDashboard = () => {
     };
 
     const handleChangeFlight = (e) => {
-        setFlightData({
-            ...flightData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+        setFlightData(prevData => ({
+            ...prevData,
+            [name]: name === 'airlineId' || name === 'totalSeats' || name === 'availableSeats'
+                ? parseInt(value, 10)
+                : value
+        }));
+    };
+
+    const handleEditAirlineSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await updateAirline(selectedAirline.airlineID, airlineData, token);
+            setMessage('Airline updated successfully!');
+            loadAirlines();
+            setCurrentAction('view');
+        } catch (error) {
+            console.error('Failed to update airline:', error);
+            setMessage('Failed to update airline. Please try again.');
+        }
+    };
+
+    const handleEditFlightSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await updateFlight(selectedFlight.id, flightData, token);
+            setMessage('Flight updated successfully!');
+            loadFlights();
+            setCurrentAction('view');
+        } catch (error) {
+            console.error('Failed to update flight:', error);
+            setMessage('Failed to update flight. Please try again.');
+        }
     };
 
     const handleLogout = () => {
@@ -172,193 +194,202 @@ const AdminDashboard = () => {
         navigate('/admin/login');
     };
 
-    const handleUpdateFlight = async (id) => {
-        try {
-            await updateFlight(id, flightData, token);
-            setMessage('Flight updated successfully!');
-            loadFlights();
-        } catch (error) {
-            console.error('Failed to update flight:', error);
-            setMessage('Failed to update flight. Please try again.');
-        }
-    };
-
     return (
         <div className="admin-dashboard">
             <h2 className="dashboard-title">Admin Dashboard</h2>
             {message && <p className="message">{message}</p>}
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
+            <div className="actions-container">
+                <button className="button" onClick={() => setCurrentAction('addAirline')}>Add Airline</button>
+                <button className="button" onClick={() => setCurrentAction('addFlight')}>Add Flight</button>
+            </div>
             {currentAction === 'view' && (
-                <div>
-                    <div className="button-container">
-                        <button className="button" onClick={() => setCurrentAction('addAirline')}>Add Airline</button>
-                        <button className="button" onClick={() => setCurrentAction('addFlight')}>Add Flight</button>
-                        <button className="button" onClick={handleLogout}>Logout</button>
-                    </div>
+                <div className="view-container">
                     <div className="airlines-container">
                         <h3>Airlines</h3>
-                        <ul>
-                            {airlines.map((airline) => (
-                                <li key={airline.id}>
-                                    {airline.name}
-                                    <div>
-                                        <button className="button" onClick={() => handleEditAirline(airline.id)}>Edit</button>
-                                        <button className="button" onClick={() => handleDeleteAirline(airline.id)}>Delete</button>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                        {airlines.length > 0 ? (
+                            <ul>
+                                {airlines.map((airline) => (
+                                    <li key={airline.airlineID}>
+                                        {airline.name}
+                                        <div>
+                                            <button className="button" onClick={() => handleEditAirline(airline.airlineID)}>Edit</button>
+                                            <button className="button" onClick={() => handleDeleteAirline(airline.airlineID)}>Delete</button>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No airlines available.</p>
+                        )}
                     </div>
                     <div className="flights-container">
                         <h3>Flights</h3>
-                        <ul>
-                            {flights.map((flight) => (
-                                <li key={flight.id}>
-                                    {flight.flightNumber} - {flight.airline.name} - {flight.departureCity} to {flight.arrivalCity}
-                                    <div>
-                                        <button className="button" onClick={() => handleEditFlight(flight.id)}>Edit</button>
-                                        <button className="button" onClick={() => handleDeleteFlight(flight.id)}>Delete</button>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                        {flights.length > 0 ? (
+                            <ul>
+                                {flights.map((flight) => (
+                                    <li key={flight.id}>
+                                        {flight.departureCity} to {flight.arrivalCity} ({flight.airline.name})
+                                        <div>
+                                            <button className="button" onClick={() => handleEditFlight(flight.id)}>Edit</button>
+                                            <button className="button" onClick={() => handleDeleteFlight(flight.id)}>Delete</button>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No flights available.</p>
+                        )}
                     </div>
                 </div>
             )}
             {currentAction === 'addAirline' && (
-                <div className="form-container">
-                    <h2 className="form-title">Add Airline</h2>
-                    <form onSubmit={handleAddAirline}>
-                        <input
-                            type="text"
-                            name="name"
-                            value={airlineData.name}
-                            onChange={handleChangeAirline}
-                            className="form-input"
-                            placeholder="Airline Name"
-                            required
-                        />
-                        <div className="form-button-container">
-                            <button type="submit" className="form-button">Add</button>
-                            <button type="button" className="form-button-secondary" onClick={() => setCurrentAction('view')}>Cancel</button>
-                        </div>
-                    </form>
-                </div>
+                <form onSubmit={handleAddAirline}>
+                    <h3>Add Airline</h3>
+                    <input
+                        type="text"
+                        name="name"
+                        value={airlineData.name}
+                        onChange={handleChangeAirline}
+                        placeholder="Airline Name"
+                        required
+                    />
+                    <button type="submit">Add Airline</button>
+                    <button type="button" onClick={() => setCurrentAction('view')}>Cancel</button>
+                </form>
+            )}
+            {currentAction === 'editAirline' && (
+                <form onSubmit={handleEditAirlineSubmit}>
+                    <h3>Edit Airline</h3>
+                    <input
+                        type="text"
+                        name="name"
+                        value={airlineData.name}
+                        onChange={handleChangeAirline}
+                        placeholder="Airline Name"
+                        required
+                    />
+                    <button type="submit">Update Airline</button>
+                    <button type="button" onClick={() => setCurrentAction('view')}>Cancel</button>
+                </form>
             )}
             {currentAction === 'addFlight' && (
-                <div className="form-container">
-                    <h2 className="form-title">Add Flight</h2>
-                    <form onSubmit={handleAddFlight}>
-                        <select
-                            name="airlineId" // Use airlineId instead of airline object
-                            value={flightData.airlineId}
-                            onChange={handleChangeFlight}
-                            className="form-input"
-                            required
-                        >
-                            <option value="">Select Airline</option>
-                            {airlines.map((airline) => (
-                                <option key={airline.id} value={airline.id}>{airline.name}</option>
-                            ))}
-                        </select>
-                        <input
-                            type="text"
-                            name="departureCity"
-                            value={flightData.departureCity}
-                            onChange={handleChangeFlight}
-                            className="form-input"
-                            placeholder="Departure City"
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="arrivalCity"
-                            value={flightData.arrivalCity}
-                            onChange={handleChangeFlight}
-                            className="form-input"
-                            placeholder="Arrival City"
-                            required
-                        />
-                        <input
-                            type="datetime-local"
-                            name="departureTime"
-                            value={flightData.departureTime}
-                            onChange={handleChangeFlight}
-                            className="form-input"
-                            required
-                        />
-                        <input
-                            type="number"
-                            name="totalSeats"
-                            value={flightData.totalSeats}
-                            onChange={handleChangeFlight}
-                            className="form-input"
-                            placeholder="Total Seats"
-                            required
-                        />
-                        <div className="form-button-container">
-                            <button type="submit" className="form-button">Add</button>
-                            <button type="button" className="form-button-secondary" onClick={() => setCurrentAction('view')}>Cancel</button>
-                        </div>
-                    </form>
-                </div>
+                <form onSubmit={handleAddFlight}>
+                    <h3>Add Flight</h3>
+                    <input
+                        type="text"
+                        name="departureCity"
+                        value={flightData.departureCity}
+                        onChange={handleChangeFlight}
+                        placeholder="Departure City"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="arrivalCity"
+                        value={flightData.arrivalCity}
+                        onChange={handleChangeFlight}
+                        placeholder="Arrival City"
+                        required
+                    />
+                    <select
+                        name="airlineId"
+                        value={flightData.airlineId}
+                        onChange={handleChangeFlight}
+                        required
+                    >
+                        <option value="">Select Airline ID</option>
+                        {airlines.map((airline) => (
+                            <option key={airline.airlineID} value={airline.airlineID}>
+                                {airline.airlineID}
+                            </option>
+                        ))}
+                    </select>
+                    <input
+                        type="datetime-local"
+                        name="departureTime"
+                        value={flightData.departureTime}
+                        onChange={handleChangeFlight}
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="totalSeats"
+                        value={flightData.totalSeats}
+                        onChange={handleChangeFlight}
+                        placeholder="Total Seats"
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="availableSeats"
+                        value={flightData.availableSeats}
+                        onChange={handleChangeFlight}
+                        placeholder="Available Seats"
+                        required
+                    />
+                    <button type="submit">Add Flight</button>
+                    <button type="button" onClick={() => setCurrentAction('view')}>Cancel</button>
+                </form>
             )}
-            {currentAction === 'editFlight' && selectedFlight && (
-                <div className="form-container">
-                    <h2 className="form-title">Edit Flight</h2>
-                    <form onSubmit={() => handleUpdateFlight(selectedFlight.id)}>
-                        <select
-                            name="airlineId" // Use airlineId instead of airline object
-                            value={flightData.airlineId}
-                            onChange={handleChangeFlight}
-                            className="form-input"
-                            required
-                        >
-                            <option value="">Select Airline</option>
-                            {airlines.map((airline) => (
-                                <option key={airline.id} value={airline.id}>{airline.name}</option>
-                            ))}
-                        </select>
-                        <input
-                            type="text"
-                            name="departureCity"
-                            value={flightData.departureCity}
-                            onChange={handleChangeFlight}
-                            className="form-input"
-                            placeholder="Departure City"
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="arrivalCity"
-                            value={flightData.arrivalCity}
-                            onChange={handleChangeFlight}
-                            className="form-input"
-                            placeholder="Arrival City"
-                            required
-                        />
-                        <input
-                            type="datetime-local"
-                            name="departureTime"
-                            value={flightData.departureTime}
-                            onChange={handleChangeFlight}
-                            className="form-input"
-                            required
-                        />
-                        <input
-                            type="number"
-                            name="totalSeats"
-                            value={flightData.totalSeats}
-                            onChange={handleChangeFlight}
-                            className="form-input"
-                            placeholder="Total Seats"
-                            required
-                        />
-                        <div className="form-button-container">
-                            <button type="submit" className="form-button">Update</button>
-                            <button type="button" className="form-button-secondary" onClick={() => setCurrentAction('view')}>Cancel</button>
-                        </div>
-                    </form>
-                </div>
+            {currentAction === 'editFlight' && (
+                <form onSubmit={handleEditFlightSubmit}>
+                    <h3>Edit Flight</h3>
+                    <input
+                        type="text"
+                        name="departureCity"
+                        value={flightData.departureCity}
+                        onChange={handleChangeFlight}
+                        placeholder="Departure City"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="arrivalCity"
+                        value={flightData.arrivalCity}
+                        onChange={handleChangeFlight}
+                        placeholder="Arrival City"
+                        required
+                    />
+                    <select
+                        name="airlineId"
+                        value={flightData.airlineId}
+                        onChange={handleChangeFlight}
+                        required
+                    >
+                        <option value="">Select Airline ID</option>
+                        {airlines.map((airline) => (
+                            <option key={airline.airlineID} value={airline.airlineID}>
+                                {airline.airlineID}
+                            </option>
+                        ))}
+                    </select>
+                    <input
+                        type="datetime-local"
+                        name="departureTime"
+                        value={flightData.departureTime}
+                        onChange={handleChangeFlight}
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="totalSeats"
+                        value={flightData.totalSeats}
+                        onChange={handleChangeFlight}
+                        placeholder="Total Seats"
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="availableSeats"
+                        value={flightData.availableSeats}
+                        onChange={handleChangeFlight}
+                        placeholder="Available Seats"
+                        required
+                    />
+                    <button type="submit">Update Flight</button>
+                    <button type="button" onClick={() => setCurrentAction('view')}>Cancel</button>
+                </form>
             )}
         </div>
     );

@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
@@ -24,8 +23,7 @@ public class AdminController {
 
     @Autowired
     private FlightService flightService;
-
-    // Airline Endpoints
+    // Airline Admin Operations Endpoints
 
     @GetMapping("/airlines")
     public ResponseEntity<List<Airline>> getAllAirlines(@RequestHeader("Authorization") String token) {
@@ -78,7 +76,7 @@ public class AdminController {
         return ResponseEntity.noContent().build();
     }
 
-    // Flight Endpoints
+    // Flight Admin Operations Endpoints
 
     @GetMapping("/flights")
     public ResponseEntity<List<Flight>> getAllFlights(@RequestHeader("Authorization") String token) {
@@ -107,6 +105,12 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
+      
+        Airline airline = airlineService.getAirlineById(flight.getAirline().getAirlineID())
+                .orElseThrow(() -> new ResourceNotFoundException("Airline not found for id :: " + flight.getAirline().getAirlineID()));
+
+        flight.setAirline(airline); 
+
         Flight createdFlight = flightService.addFlight(flight);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdFlight);
     }
@@ -117,7 +121,24 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        Flight updatedFlight = flightService.updateFlight(id, flightDetails);
+        
+        Flight existingFlight = flightService.getFlightById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Flight not found for this id :: " + id));
+
+        
+        existingFlight.setDepartureCity(flightDetails.getDepartureCity());
+        existingFlight.setArrivalCity(flightDetails.getArrivalCity());
+        existingFlight.setDepartureTime(flightDetails.getDepartureTime());
+        existingFlight.setTotalSeats(flightDetails.getTotalSeats());
+        existingFlight.setAvailableSeats(flightDetails.getAvailableSeats());
+
+        
+        Airline airline = airlineService.getAirlineById(flightDetails.getAirline().getAirlineID())
+                .orElseThrow(() -> new ResourceNotFoundException("Airline not found for id :: " + flightDetails.getAirline().getAirlineID()));
+
+        existingFlight.setAirline(airline); 
+
+        Flight updatedFlight = flightService.updateFlight(id, existingFlight);
         return ResponseEntity.ok().body(updatedFlight);
     }
 
