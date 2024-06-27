@@ -10,10 +10,9 @@ public class Airline {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int airlineID;
 
-    @Column( unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
- 
     public int getAirlineID() {
         return airlineID;
     }

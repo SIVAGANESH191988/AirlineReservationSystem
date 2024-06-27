@@ -1,18 +1,13 @@
 package com.siva.AirlineReservationSystem.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
+import jakarta.persistence.*;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Payments")
+@JsonIgnoreProperties({"booking"})
 public class Payment {
 
     @Id
@@ -32,45 +27,43 @@ public class Payment {
     @Column(nullable = false)
     private Date paymentDate;
 
-	public int getPaymentID() {
-		return paymentID;
-	}
+    public int getPaymentID() {
+        return paymentID;
+    }
 
-	public void setPaymentID(int paymentID) {
-		this.paymentID = paymentID;
-	}
+    public void setPaymentID(int paymentID) {
+        this.paymentID = paymentID;
+    }
 
-	public Booking getBooking() {
-		return booking;
-	}
+    public Booking getBooking() {
+        return booking;
+    }
 
-	public void setBooking(Booking booking) {
-		this.booking = booking;
-	}
+    public void setBooking(Booking booking) {
+        this.booking = booking;
+    }
 
-	public String getPaymentMethod() {
-		return paymentMethod;
-	}
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
 
-	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
 
-	public double getAmount() {
-		return amount;
-	}
+    public double getAmount() {
+        return amount;
+    }
 
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 
-	public Date getPaymentDate() {
-		return paymentDate;
-	}
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
 
-	public void setPaymentDate(Date paymentDate) {
-		this.paymentDate = paymentDate;
-	}
-
-
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
 }

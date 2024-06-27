@@ -23,7 +23,7 @@ export const registerAdmin = async (admin) => {
 export const logoutAdmin = async (token) => {
     try {
         const response = await axios.post(`${API_URL}/admin/logout`, {}, {
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `${token}` }
         });
         return response.data;
     } catch (error) {

@@ -36,12 +36,4 @@ public class BookingService {
         booking.setFlight(flight.get());
         return bookingRepository.save(booking);
     }
-
-    public Optional<Booking> getBookingById(Long id) {
-        return bookingRepository.findById(id);
-    }
-
-    public void deleteBooking(Long id) {
-        bookingRepository.deleteById(id);
-    }
 }

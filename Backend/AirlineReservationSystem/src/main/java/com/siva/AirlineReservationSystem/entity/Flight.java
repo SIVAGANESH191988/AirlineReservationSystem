@@ -1,11 +1,15 @@
 package com.siva.AirlineReservationSystem.entity;
 
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Flights")
+@JsonIgnoreProperties({"bookings"})
 public class Flight {
 
     @Id
@@ -15,6 +19,9 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name = "airlineID", nullable = false)
     private Airline airline;
+
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Booking> bookings;
 
     @Column(nullable = false)
     private String departureCity;
@@ -32,7 +39,6 @@ public class Flight {
     @Column(nullable = false)
     private int availableSeats;
 
-    // Getters and Setters
     public int getFlightID() {
         return flightID;
     }
@@ -87,5 +93,13 @@ public class Flight {
 
     public void setAvailableSeats(int availableSeats) {
         this.availableSeats = availableSeats;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

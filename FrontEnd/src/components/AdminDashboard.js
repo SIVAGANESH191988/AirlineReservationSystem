@@ -29,6 +29,7 @@ const AdminDashboard = () => {
         totalSeats: '',
         availableSeats: ''
     });
+
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
     const token = localStorage.getItem('adminToken') || '';
@@ -55,12 +56,14 @@ const AdminDashboard = () => {
     const loadFlights = async () => {
         try {
             const data = await getAllFlights(token);
+            console.log('Flights data:', data); // Check what 'data' contains
             setFlights(data);
         } catch (error) {
             console.error('Failed to load flights:', error);
             setMessage('Failed to load flights. Please try again.');
         }
     };
+    
 
     const handleDeleteAirline = async (id) => {
         try {
@@ -87,7 +90,7 @@ const AdminDashboard = () => {
     const handleAddAirline = async (event) => {
         event.preventDefault();
         try {
-            const response = await addAirline(airlineData, token);
+            await addAirline(airlineData, token);
             setMessage('Airline added successfully!');
             setAirlineData({ name: '' });
             loadAirlines();
@@ -101,11 +104,12 @@ const AdminDashboard = () => {
     const handleAddFlight = async (event) => {
         event.preventDefault();
         try {
-            const response = await addFlight({
+            await addFlight({
                 ...flightData,
-                airlineId: flightData.airlineId // Ensure it's parsed as integer if needed
+                airline: {
+                    airlineID: flightData.airlineId
+                }
             }, token);
-            console.log('Flight added:', response);
             setMessage('Flight added successfully!');
             loadFlights();
             setCurrentAction('view');
@@ -114,8 +118,13 @@ const AdminDashboard = () => {
             setMessage('Failed to add flight. Please try again.');
         }
     };
-    
+
     const handleEditAirline = async (id) => {
+        if (isNaN(id) || id === undefined || id === null) {
+            console.error('Invalid airline ID:', id);
+            setMessage('Failed to load airline. Please try again.');
+            return;
+        }
         try {
             const data = await getAirlineById(id, token);
             setSelectedAirline(data);
@@ -128,6 +137,11 @@ const AdminDashboard = () => {
     };
 
     const handleEditFlight = async (id) => {
+        if (isNaN(id) || id === undefined || id === null) {
+            console.error('Invalid flight ID:', id);
+            setMessage('Failed to load flight. Please try again.');
+            return;
+        }
         try {
             const data = await getFlightById(id, token);
             setSelectedFlight(data);
@@ -176,10 +190,15 @@ const AdminDashboard = () => {
         }
     };
 
-    const handleEditFlightSubmit = async (event) => {
+    const handleUpdateFlight = async (event) => {
         event.preventDefault();
         try {
-            await updateFlight(selectedFlight.id, flightData, token);
+            await updateFlight(selectedFlight.flightID, {
+                ...flightData,
+                airline: {
+                    airlineID: flightData.airlineId
+                }
+            }, token);
             setMessage('Flight updated successfully!');
             loadFlights();
             setCurrentAction('view');
@@ -228,11 +247,11 @@ const AdminDashboard = () => {
                         {flights.length > 0 ? (
                             <ul>
                                 {flights.map((flight) => (
-                                    <li key={flight.id}>
+                                    <li key={flight.flightID}>
                                         {flight.departureCity} to {flight.arrivalCity} ({flight.airline.name})
                                         <div>
-                                            <button className="button" onClick={() => handleEditFlight(flight.id)}>Edit</button>
-                                            <button className="button" onClick={() => handleDeleteFlight(flight.id)}>Delete</button>
+                                            <button className="button" onClick={() => handleEditFlight(flight.flightID)}>Edit</button>
+                                            <button className="button" onClick={() => handleDeleteFlight(flight.flightID)}>Delete</button>
                                         </div>
                                     </li>
                                 ))}
@@ -333,7 +352,7 @@ const AdminDashboard = () => {
                 </form>
             )}
             {currentAction === 'editFlight' && (
-                <form onSubmit={handleEditFlightSubmit}>
+                <form onSubmit={handleUpdateFlight}>
                     <h3>Edit Flight</h3>
                     <input
                         type="text"
@@ -387,8 +406,8 @@ const AdminDashboard = () => {
                         placeholder="Available Seats"
                         required
                     />
-                    <button type="submit">Update Flight</button>
-                    <button type="button" onClick={() => setCurrentAction('view')}>Cancel</button>
+                   <button type="submit">Update Flight</button>
+                   <button type="button" onClick={() => setCurrentAction('view')}>Cancel</button>
                 </form>
             )}
         </div>

@@ -1,10 +1,11 @@
 package com.siva.AirlineReservationSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "bookings")
+@Table(name = "Bookings")
 public class Booking {
 
     @Id
@@ -32,10 +33,7 @@ public class Booking {
     @Column(nullable = false)
     private String paymentStatus;
 
-    // Constructors, Getters, and Setters
-
-    public Booking() {}
-
+    // Getters and Setters
     public Long getBookingID() {
         return bookingID;
     }

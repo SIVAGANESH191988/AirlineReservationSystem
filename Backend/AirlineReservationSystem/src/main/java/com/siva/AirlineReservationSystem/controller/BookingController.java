@@ -15,17 +15,10 @@ public class BookingController {
 
     @PostMapping("/bookings")
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
+        if (booking.getUser() == null || booking.getUser().getUserID() == 0 || 
+            booking.getFlight() == null || booking.getFlight().getFlightID() == 0) {
+            return ResponseEntity.badRequest().body(null);
+        }
         return ResponseEntity.ok(bookingService.createBooking(booking));
-    }
-
-    @GetMapping("/bookings/{id}")
-    public ResponseEntity<Booking> getBookingById(@PathVariable Long id) {
-        return ResponseEntity.ok(bookingService.getBookingById(id).orElseThrow(() -> new RuntimeException("Booking not found")));
-    }
-
-    @DeleteMapping("/bookings/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
-        bookingService.deleteBooking(id);
-        return ResponseEntity.noContent().build();
     }
 }

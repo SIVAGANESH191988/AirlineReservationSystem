@@ -1,13 +1,6 @@
 package com.siva.AirlineReservationSystem.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -38,13 +31,9 @@ public class User {
     @Column(length = 255)
     private String address;
 
-    // Constructors, Getters, and Setters
-
     public User() {
         // Default constructor
     }
-
-    // Getters and Setters (omitted for brevity)
 
     public int getUserID() {
         return userID;
@@ -110,4 +99,3 @@ public class User {
         this.address = address;
     }
 }
-
