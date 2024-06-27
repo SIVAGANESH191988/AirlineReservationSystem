@@ -30,7 +30,7 @@ CREATE TABLE Flights (
     airlineID INT NOT NULL,
     departureCity VARCHAR(255) NOT NULL,
     arrivalCity VARCHAR(255) NOT NULL,
-    departureTime TIMESTAMP NOT NULL,
+    departureTime datetime(6) NOT NULL,
     totalSeats INT NOT NULL,
     availableSeats INT NOT NULL,
     FOREIGN KEY (airlineID) REFERENCES Airlines(airlineID)
@@ -43,7 +43,7 @@ CREATE TABLE Bookings (
     flightID INT NOT NULL,
     cabinClass VARCHAR(255) NOT NULL,
     seatNumber VARCHAR(255) NOT NULL,
-    bookingDate TIMESTAMP NOT NULL,
+    bookingDate datetime(6) NOT NULL,
     paymentStatus VARCHAR(255) NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users(userID),
     FOREIGN KEY (flightID) REFERENCES Flights(flightID)
@@ -55,7 +55,7 @@ CREATE TABLE Payments (
     bookingID BIGINT NOT NULL,
     paymentMethod VARCHAR(255) NOT NULL,
     amount DOUBLE NOT NULL,
-    paymentDate TIMESTAMP NOT NULL,
+    paymentDate datetime(6) NOT NULL,
     FOREIGN KEY (bookingID) REFERENCES Bookings(bookingID)
 );
 
