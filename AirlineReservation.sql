@@ -1,88 +1,77 @@
-
-CREATE DATABASE AirlineReservationSystem;
-USE AirlineReservationSystem;
-
-CREATE TABLE Airlines (
-    AirlineID INT AUTO_INCREMENT PRIMARY KEY,
-    AirlineName VARCHAR(100) NOT NULL
-);
-
-
-CREATE TABLE Users (
-    UserID INT AUTO_INCREMENT PRIMARY KEY,
-    Username VARCHAR(50) UNIQUE NOT NULL,
-    Password VARCHAR(100) NOT NULL,
-    Email VARCHAR(100) UNIQUE NOT NULL,
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
-    Phone VARCHAR(20),
-    Address VARCHAR(255)
-);
-
-
-CREATE TABLE Flights (
-    FlightID INT AUTO_INCREMENT PRIMARY KEY,
-    AirlineID INT,
-    DepartureCity VARCHAR(100) NOT NULL,
-    ArrivalCity VARCHAR(100) NOT NULL,
-    DepartureTime DATETIME NOT NULL,
-    TotalSeats INT NOT NULL,
-    AvailableSeats INT NOT NULL,
-    FOREIGN KEY (AirlineID) REFERENCES Airlines(AirlineID)
-);
-
-
-CREATE TABLE Bookings (
-    BookingID INT AUTO_INCREMENT PRIMARY KEY,
-    UserID INT,
-    FlightID INT,
-    CabinClass VARCHAR(50),
-    SeatNumber VARCHAR(10),
-    BookingDate DATETIME NOT NULL,
-    PaymentStatus VARCHAR(50),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID),
-    FOREIGN KEY (FlightID) REFERENCES Flights(FlightID)
-);
-
-
+-- Table: Admins
 CREATE TABLE Admins (
-    AdminID INT AUTO_INCREMENT PRIMARY KEY,
-    Username VARCHAR(50) UNIQUE NOT NULL,
-    Password VARCHAR(100) NOT NULL,
-    Email VARCHAR(100) UNIQUE NOT NULL
+    adminID INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL
 );
 
+-- Table: Airlines
+CREATE TABLE Airlines (
+    airlineID INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
 
+-- Table: Users
+CREATE TABLE Users (
+    userID INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    firstName VARCHAR(50) NOT NULL,
+    lastName VARCHAR(50) NOT NULL,
+    phone VARCHAR(20),
+    address VARCHAR(255)
+);
+
+-- Table: Flights
+CREATE TABLE Flights (
+    flightID INT AUTO_INCREMENT PRIMARY KEY,
+    airlineID INT NOT NULL,
+    departureCity VARCHAR(255) NOT NULL,
+    arrivalCity VARCHAR(255) NOT NULL,
+    departureTime datetime(6) NOT NULL,
+    totalSeats INT NOT NULL,
+    availableSeats INT NOT NULL,
+    FOREIGN KEY (airlineID) REFERENCES Airlines(airlineID)
+);
+
+-- Table: Bookings
+CREATE TABLE Bookings (
+    bookingID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userID INT NOT NULL,
+    flightID INT NOT NULL,
+    cabinClass VARCHAR(255) NOT NULL,
+    seatNumber VARCHAR(255) NOT NULL,
+    bookingDate datetime(6) NOT NULL,
+    paymentStatus VARCHAR(255) NOT NULL,
+    FOREIGN KEY (userID) REFERENCES Users(userID),
+    FOREIGN KEY (flightID) REFERENCES Flights(flightID)
+);
+
+-- Table: Payments
 CREATE TABLE Payments (
-    PaymentID INT AUTO_INCREMENT PRIMARY KEY,
-    BookingID INT,
-    PaymentMethod VARCHAR(50) NOT NULL,
-    Amount DECIMAL(10, 2) NOT NULL,
-    PaymentDate DATETIME NOT NULL,
-    FOREIGN KEY (BookingID) REFERENCES Bookings(BookingID)
+    paymentID INT AUTO_INCREMENT PRIMARY KEY,
+    bookingID BIGINT NOT NULL,
+    paymentMethod VARCHAR(255) NOT NULL,
+    amount DOUBLE NOT NULL,
+    paymentDate datetime(6) NOT NULL,
+    FOREIGN KEY (bookingID) REFERENCES Bookings(bookingID)
 );
 
-
-CREATE TABLE UserPreferences (
-    UserID INT PRIMARY KEY,
-    MealPreference VARCHAR(50),
-    SpecialAssistance VARCHAR(255),
-    FrequentFlyerNumber VARCHAR(50),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
-
-
-CREATE TABLE FlightStatuses (
-    FlightID INT PRIMARY KEY,
-    Status VARCHAR(50) NOT NULL,
-    UpdateTime DATETIME NOT NULL,
-    FOREIGN KEY (FlightID) REFERENCES Flights(FlightID)
-);
-
-
+-- Table: Localizations
 CREATE TABLE Localizations (
-    LocaleID INT AUTO_INCREMENT PRIMARY KEY,
-    Language VARCHAR(50) NOT NULL,
-    Currency VARCHAR(10) NOT NULL,
-    TimeZone VARCHAR(50) NOT NULL
+    localeID INT AUTO_INCREMENT PRIMARY KEY,
+    language VARCHAR(255) NOT NULL,
+    currency VARCHAR(255) NOT NULL,
+    timeZone VARCHAR(255) NOT NULL
+);
+
+-- Table: UserPreferences
+CREATE TABLE UserPreferences (
+    userID INT PRIMARY KEY,
+    mealPreference VARCHAR(255),
+    specialAssistance VARCHAR(255),
+    frequentFlyerNumber VARCHAR(255),
+    FOREIGN KEY (userID) REFERENCES Users(userID)
 );
