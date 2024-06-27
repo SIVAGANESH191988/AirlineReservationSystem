@@ -1,0 +1,109 @@
+<mxfile host="app.diagrams.net" modified="2024-06-27T07:17:22.899Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="DQLJtUH3VaZuR8_aVjrS" version="24.6.2" type="google">
+  <diagram name="Page-1" id="Ls5iPAQee3uVOFL8SIYH">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-11" value="Users" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="110" width="200" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-31" value="&lt;div&gt;- int userID&lt;/div&gt;&lt;div&gt;- String username&lt;/div&gt;&lt;div&gt;- String password&lt;/div&gt;&lt;div&gt;- String email&lt;/div&gt;&lt;div&gt;- String firstName&lt;/div&gt;&lt;div&gt;- String lastName&lt;/div&gt;&lt;div&gt;- String phone&lt;/div&gt;&lt;div&gt;- String address&lt;/div&gt;&lt;div&gt;+ int getUserID()&lt;/div&gt;&lt;div&gt;+ void setUserID(int userID)&lt;/div&gt;&lt;div&gt;+ String getUsername()&lt;/div&gt;&lt;div&gt;+ void setUsername(String username)&lt;/div&gt;&lt;div&gt;+ String getPassword()&lt;/div&gt;&lt;div&gt;+ void setPassword(String password)&lt;/div&gt;&lt;div&gt;+ String getEmail()&lt;/div&gt;&lt;div&gt;+ void setEmail(String email)&lt;/div&gt;&lt;div&gt;+ String getFirstName()&lt;/div&gt;&lt;div&gt;+ void setFirstName(String firstName)&lt;/div&gt;&lt;div&gt;+ String getLastName()&lt;/div&gt;&lt;div&gt;+ void setLastName(String lastName)&lt;/div&gt;&lt;div&gt;+ String getPhone()&lt;/div&gt;&lt;div&gt;+ void setPhone(String phone)&lt;/div&gt;&lt;div&gt;+ String getAddress()&lt;/div&gt;&lt;div&gt;+ void setAddress(String address)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-11">
+          <mxGeometry x="5" y="30" width="230" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-13" value="Admin" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="110" width="305" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-34" value="&lt;div&gt;- int adminID&lt;/div&gt;&lt;div&gt;- String username&lt;/div&gt;&lt;div&gt;- String password&lt;/div&gt;&lt;div&gt;- String email&lt;/div&gt;&lt;div&gt;+ int getAdminID()&lt;/div&gt;&lt;div&gt;+ void setAdminID(int adminID)&lt;/div&gt;&lt;div&gt;+ String getUsername()&lt;/div&gt;&lt;div&gt;+ void setUsername(String username)&lt;/div&gt;&lt;div&gt;+ String getPassword()&lt;/div&gt;&lt;div&gt;+ void setPassword(String password)&lt;/div&gt;&lt;div&gt;+ String getEmail()&lt;/div&gt;&lt;div&gt;+ void setEmail(String email)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-13">
+          <mxGeometry x="10" y="35" width="230" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-14" value="Flight" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="110" width="300" height="372" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-33" value="&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;div&gt;- int flightID&lt;/div&gt;&lt;div&gt;- Airline airline&lt;/div&gt;&lt;div&gt;- String departureCity&lt;/div&gt;&lt;div&gt;- String arrivalCity&lt;/div&gt;&lt;div&gt;- Date departureTime&lt;/div&gt;&lt;div&gt;- int totalSeats&lt;/div&gt;&lt;div&gt;- int availableSeats&lt;/div&gt;&lt;div&gt;+ int getFlightID()&lt;/div&gt;&lt;div&gt;+ void setFlightID(int flightID)&lt;/div&gt;&lt;div&gt;+ Airline getAirline()&lt;/div&gt;&lt;div&gt;+ void setAirline(Airline airline)&lt;/div&gt;&lt;div&gt;+ String getDepartureCity()&lt;/div&gt;&lt;div&gt;+ void setDepartureCity(String departureCity)&lt;/div&gt;&lt;div&gt;+ String getArrivalCity()&lt;/div&gt;&lt;div&gt;+ void setArrivalCity(String arrivalCity)&lt;/div&gt;&lt;div&gt;+ Date getDepartureTime()&lt;/div&gt;&lt;div&gt;+ void setDepartureTime(Date departureTime)&lt;/div&gt;&lt;div&gt;+ int getTotalSeats()&lt;/div&gt;&lt;div&gt;+ void setTotalSeats(int totalSeats)&lt;/div&gt;&lt;div&gt;+ int getAvailableSeats()&lt;/div&gt;&lt;div&gt;+ void setAvailableSeats(int availableSeats)&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-14">
+          <mxGeometry x="15" y="32" width="270" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-17" value="AirlineService" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="32.5" y="1200" width="255" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-40" value="&lt;div&gt;- List&amp;lt;Airline&amp;gt; getAllAirlines()&lt;/div&gt;&lt;div&gt;- Airline getAirlineById(int id)&lt;/div&gt;&lt;div&gt;- Airline addAirline(Airline airline)&lt;/div&gt;&lt;div&gt;- Airline updateAirline(int id, Airline details)&lt;/div&gt;&lt;div&gt;- void deleteAirline(int id)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-17">
+          <mxGeometry y="39" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-20" value="AdminController" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="1680" width="510" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-50" value="&lt;div&gt;- AdminService adminService&lt;/div&gt;&lt;div&gt;- AirlineService airlineService&lt;/div&gt;&lt;div&gt;- FlightService flightService&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;List&amp;lt;Airline&amp;gt;&amp;gt; getAllAirlines(String token)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Airline&amp;gt; getAirlineById(int id, String token)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Airline&amp;gt; createAirline(Airline airline, String token)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Airline&amp;gt; updateAirline(int id, Airline details, String token)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Void&amp;gt; deleteAirline(int id, String token)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;List&amp;lt;Flight&amp;gt;&amp;gt; getAllFlights(String token)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Flight&amp;gt; getFlightById(int id, String token)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Flight&amp;gt; createFlight(Flight flight, String token)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Flight&amp;gt; updateFlight(int id, Flight details, String token)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Void&amp;gt; deleteFlight(int id, String token)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-20">
+          <mxGeometry x="10" y="39" width="420" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-23" value="BookingController" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="25" y="1440" width="325" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-49" value="Te&lt;span style=&quot;background-color: initial;&quot;&gt;- BookingService bookingService&lt;/span&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Booking&amp;gt; createBooking(Booking booking)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Booking&amp;gt; getBookingById(Long id)&lt;/div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ ResponseEntity&amp;lt;Void&amp;gt; deleteBooking(Long id)&lt;/span&gt;xt" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-23">
+          <mxGeometry x="10" y="50" width="350" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-24" value="BookingService" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="44" y="930" width="295" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-42" value="&lt;div&gt;- Booking createBooking(Booking booking)&lt;/div&gt;&lt;div&gt;- Booking getBookingById(Long id)&lt;/div&gt;&lt;div&gt;- void deleteBooking(Long id)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-24">
+          <mxGeometry y="60" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-25" value="PaymentService" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="724.5" y="1210" width="311" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-46" value="&lt;div&gt;- List&amp;lt;Payment&amp;gt; getAllPayments()&lt;/div&gt;&lt;div&gt;- Payment getPaymentById(int id)&lt;/div&gt;&lt;div&gt;- Payment savePayment(Payment payment)&lt;/div&gt;&lt;div&gt;- Payment updatePayment(int id, Payment details)&lt;/div&gt;&lt;div&gt;- boolean deletePayment(int id)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-25">
+          <mxGeometry x="10.5" y="48" width="290" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-26" value="UserService" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="1200" width="310" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-44" value="&lt;div&gt;- User findByUsername(String username)&lt;/div&gt;&lt;div&gt;- User findByEmail(String email)&lt;/div&gt;&lt;div&gt;- void save(User user)&lt;/div&gt;&lt;div&gt;- User authenticate(String username, String password)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-26">
+          <mxGeometry y="38" width="310" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-27" value="&lt;p class=&quot;MsoNormal&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="440" y="888" width="20" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-35" value="Airline" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="560" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-36" value="&lt;div&gt;- int airlineID&lt;/div&gt;&lt;div&gt;- String name&lt;/div&gt;&lt;div&gt;+ int getAirlineID()&lt;/div&gt;&lt;div&gt;+ void setAirlineID(int airlineID)&lt;/div&gt;&lt;div&gt;+ String getName()&lt;/div&gt;&lt;div&gt;+ void setName(String name)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-35">
+          <mxGeometry x="10" y="40" width="190" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-16" value="Payment" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="615" y="548" width="290" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-38" value="&lt;div&gt;- int paymentID&lt;/div&gt;&lt;div&gt;- Booking booking&lt;/div&gt;&lt;div&gt;- String paymentMethod&lt;/div&gt;&lt;div&gt;- double amount&lt;/div&gt;&lt;div&gt;- Date paymentDate&lt;/div&gt;&lt;div&gt;+ int getPaymentID()&lt;/div&gt;&lt;div&gt;+ void setPaymentID(int paymentID)&lt;/div&gt;&lt;div&gt;+ Booking getBooking()&lt;/div&gt;&lt;div&gt;+ void setBooking(Booking booking)&lt;/div&gt;&lt;div&gt;+ String getPaymentMethod()&lt;/div&gt;&lt;div&gt;+ void setPaymentMethod(String paymentMethod)&lt;/div&gt;&lt;div&gt;+ double getAmount()&lt;/div&gt;&lt;div&gt;+ void setAmount(double amount)&lt;/div&gt;&lt;div&gt;+ Date getPaymentDate()&lt;/div&gt;&lt;div&gt;+ void setPaymentDate(Date paymentDate)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-16">
+          <mxGeometry x="10" y="20" width="290" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-15" value="Booking" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="44" y="548" width="270" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-37" value="&lt;span style=&quot;background-color: initial;&quot;&gt;-Long bookingID&lt;/span&gt;&lt;div&gt;- User user&lt;/div&gt;&lt;div&gt;- Flight flight&lt;/div&gt;&lt;div&gt;- String cabinClass&lt;/div&gt;&lt;div&gt;- String seatNumber&lt;/div&gt;&lt;div&gt;- Date bookingDate&lt;/div&gt;&lt;div&gt;- String paymentStatus&lt;/div&gt;&lt;div&gt;+ Long getBookingID()&lt;/div&gt;&lt;div&gt;+ void setBookingID(Long bookingID)&lt;/div&gt;&lt;div&gt;+ User getUser()&lt;/div&gt;&lt;div&gt;+ void setUser(User user)&lt;/div&gt;&lt;div&gt;+ Flight getFlight()&lt;/div&gt;&lt;div&gt;+ void setFlight(Flight flight)&lt;/div&gt;&lt;div&gt;+ String getCabinClass()&lt;/div&gt;&lt;div&gt;+ void setCabinClass(String cabinClass)&lt;/div&gt;&lt;div&gt;+ String getSeatNumber()&lt;/div&gt;&lt;div&gt;+ void setSeatNumber(String seatNumber)&lt;/div&gt;&lt;div&gt;+ Date getBookingDate()&lt;/div&gt;&lt;div&gt;+ void setBookingDate(Date bookingDate)&lt;/div&gt;&lt;div&gt;+ String getPaymentStatus()&lt;/div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ void setPaymentStatus(String paymentStatus)&lt;/span&gt;xt" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-15">
+          <mxGeometry y="30" width="290" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-22" value="PaymentController" style="swimlane;whiteSpace=wrap;html=1;startSize=20;" vertex="1" parent="1">
+          <mxGeometry x="20" y="1680" width="390" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-47" value="Text&lt;span style=&quot;background-color: initial;&quot;&gt;- PaymentService paymentService&lt;/span&gt;&lt;div&gt;+ ResponseEntity&amp;lt;List&amp;lt;Payment&amp;gt;&amp;gt; getAllPayments()&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Payment&amp;gt; getPaymentById(int id)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Payment&amp;gt; makePayment(Payment payment)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Payment&amp;gt; updatePayment(int id, Payment details)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;Void&amp;gt; deletePayment(int id)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-22">
+          <mxGeometry y="40" width="390" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-21" value="AuthController" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="414" y="1460" width="370" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-48" value="Tex&lt;span style=&quot;background-color: initial;&quot;&gt;- UserService userService&lt;/span&gt;&lt;div&gt;- AdminService adminService&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;?&amp;gt; register(User user)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;?&amp;gt; login(String username, String password)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;?&amp;gt; registerAdmin(Admin admin)&lt;/div&gt;&lt;div&gt;+ ResponseEntity&amp;lt;?&amp;gt; loginAdmin(Map&amp;lt;String, String&amp;gt; credentials)&lt;/div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ ResponseEntity&amp;lt;?&amp;gt; logoutAdmin(String token)&lt;/span&gt;t" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-21">
+          <mxGeometry y="50" width="380" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-19" value="FlightService" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="930" width="240" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-41" value="Tex&lt;span style=&quot;background-color: initial;&quot;&gt;- List&amp;lt;Flight&amp;gt; getAllFlights()&lt;/span&gt;&lt;div&gt;- Flight getFlightById(int id)&lt;/div&gt;&lt;div&gt;- Flight addFlight(Flight flight)&lt;/div&gt;&lt;div&gt;- Flight updateFlight(int id, Flight details)&lt;/div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- void deleteFlight(int id)&lt;/span&gt;t" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-19">
+          <mxGeometry y="38" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-18" value="AdminService" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="919" width="440" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="LqIe8W-EmF46yVbMEi3k-45" value="&lt;div&gt;- Admin findByUsername(String username)&lt;/div&gt;&lt;div&gt;- void save(Admin admin)&lt;/div&gt;&lt;div&gt;- boolean validateToken(String token)&lt;/div&gt;&lt;div&gt;- String generateToken(Admin admin)&lt;/div&gt;&lt;div&gt;- void invalidateToken(String token)&lt;/div&gt;&lt;div&gt;- boolean verifyPassword(String input, String storedPassword)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="LqIe8W-EmF46yVbMEi3k-18">
+          <mxGeometry y="30" width="350" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
