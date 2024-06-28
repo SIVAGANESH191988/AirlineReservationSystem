@@ -7,18 +7,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class BookingController {
 
     @Autowired
     private BookingService bookingService;
 
-    @PostMapping("/bookings")
-    public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
-        if (booking.getUser() == null || booking.getUser().getUserID() == 0 || 
-            booking.getFlight() == null || booking.getFlight().getFlightID() == 0) {
-            return ResponseEntity.badRequest().body(null);
-        }
-        return ResponseEntity.ok(bookingService.createBooking(booking));
+    @PostMapping("/book/{flightID}")
+    public ResponseEntity<Booking> bookFlight(
+            @PathVariable Integer flightID,
+            @RequestHeader("Authorization") String token,
+            @RequestBody Booking bookingDetails) {
+
+        // Extract user ID from token and add authentication logic here if necessary
+        Integer userID = 1; // Example user ID, replace with actual extraction logic
+        
+        Booking createdBooking = bookingService.createBooking(userID, flightID, bookingDetails);
+        return ResponseEntity.ok(createdBooking);
     }
 }

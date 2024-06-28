@@ -10,14 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class FlightService {
-
-	@Autowired
+    @Autowired
     private FlightRepository flightRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     public List<Flight> getFlightsByAirline(Airline airline) {
         return flightRepository.findByAirline(airline);
@@ -26,8 +30,6 @@ public class FlightService {
     public List<Integer> getFlightIdsByAirlineId(int airlineId) {
         return flightRepository.findFlightIdsByAirlineId(airlineId);
     }
-    @Autowired
-    private BookingRepository bookingRepository;
 
     public List<Flight> getAllFlights() {
         return flightRepository.findAll();
@@ -35,6 +37,16 @@ public class FlightService {
 
     public Optional<Flight> getFlightById(int id) {
         return flightRepository.findById(id);
+    }
+
+    public List<Flight> searchFlights(String departureCity, String arrivalCity, Date travelDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(travelDate);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        Date endDate = calendar.getTime();
+
+        return flightRepository.findByDepartureCityAndArrivalCityAndDepartureTimeBetween(
+                departureCity, arrivalCity, travelDate, endDate);
     }
 
     @Transactional
@@ -62,7 +74,6 @@ public class FlightService {
         Flight flight = flightRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Flight not found for this id :: " + id));
 
-       
         List<Booking> bookings = bookingRepository.findByFlightFlightID(id);
         if (!bookings.isEmpty()) {
             throw new ResourceNotFoundException("Cannot delete flight with existing bookings.");

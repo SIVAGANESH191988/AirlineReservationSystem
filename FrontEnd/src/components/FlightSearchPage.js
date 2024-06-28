@@ -12,39 +12,55 @@ function FlightSearchPage() {
 
   const handleSearch = async () => {
     try {
-     
-      const response = await axios.get('http://localhost:8080/api/admin/flights', {
+      const response = await axios.get('http://localhost:8080/api/flights/search', {
         params: criteria,
         headers: {
-          Authorization: token
+          Authorization: 'Bearer your_token_here'  // Add the token here or make sure it's properly set
         }
       });
-      console.log('Flight search response:', response.data); 
+      console.log('Flight search response:', response.data);
       setFlights(response.data);
-      setError(null); 
+      setError(null);
     } catch (error) {
       console.error('Error searching for flights', error);
-      setError('Error fetching flights. Please try again later.'); 
-      setFlights([]); 
+      setError('Error fetching flights. Please try again later.');
+      setFlights([]);
     }
   };
 
   const handleBooking = (flightId) => {
-    
     console.log(`Booking flight with ID ${flightId}`);
- 
+    // Implement the booking logic here
   };
 
   return (
     <div>
       <h1>Search Flights</h1>
-      <input name="departureCity" type="text" placeholder="Departure City" value={criteria.departureCity} onChange={handleChange} />
-      <input name="arrivalCity" type="text" placeholder="Arrival City" value={criteria.arrivalCity} onChange={handleChange} />
-      <input name="travelDate" type="date" placeholder="Travel Date" value={criteria.travelDate} onChange={handleChange} />
+      <input
+        name="departureCity"
+        type="text"
+        placeholder="Departure City"
+        value={criteria.departureCity}
+        onChange={handleChange}
+      />
+      <input
+        name="arrivalCity"
+        type="text"
+        placeholder="Arrival City"
+        value={criteria.arrivalCity}
+        onChange={handleChange}
+      />
+      <input
+        name="travelDate"
+        type="date"
+        placeholder="Travel Date"
+        value={criteria.travelDate}
+        onChange={handleChange}
+      />
       <button onClick={handleSearch}>Search</button>
 
-      {error && <p>{error}</p>} {}
-
+      {error && <p>{error}</p>}
+      
       {flights.length > 0 && Array.isArray(flights) && (
         <ul>
           {flights.map(flight => (
@@ -58,7 +74,7 @@ function FlightSearchPage() {
         </ul>
       )}
 
-      {flights.length === 0 && !error && <p>No flights found.</p>} {}
+      {flights.length === 0 && !error && <p>No flights found.</p>}
     </div>
   );
 }

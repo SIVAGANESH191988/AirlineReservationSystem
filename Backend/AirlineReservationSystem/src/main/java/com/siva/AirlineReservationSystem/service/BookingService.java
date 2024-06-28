@@ -1,4 +1,3 @@
-
 package com.siva.AirlineReservationSystem.service;
 
 import com.siva.AirlineReservationSystem.entity.Booking;
@@ -24,16 +23,17 @@ public class BookingService {
     @Autowired
     private FlightRepository flightRepository;
 
-    public Booking createBooking(Booking booking) {
-        Optional<User> user = userRepository.findById(booking.getUser().getUserID());
-        Optional<Flight> flight = flightRepository.findById(booking.getFlight().getFlightID());
+    public Booking createBooking(Integer userID, Integer flightID, Booking bookingDetails) {
+        User user = userRepository.findById(userID)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!user.isPresent() || !flight.isPresent()) {
-            throw new RuntimeException("User or Flight not found");
-        }
+        Flight flight = flightRepository.findById(flightID)
+                .orElseThrow(() -> new RuntimeException("Flight not found"));
 
-        booking.setUser(user.get());
-        booking.setFlight(flight.get());
-        return bookingRepository.save(booking);
+        bookingDetails.setUser(user);
+        bookingDetails.setFlight(flight);
+        bookingDetails.setBookingDate(new java.util.Date());
+
+        return bookingRepository.save(bookingDetails);
     }
 }
