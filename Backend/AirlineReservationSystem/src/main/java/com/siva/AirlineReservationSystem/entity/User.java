@@ -8,7 +8,8 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userID;
+    @Column(name = "userid")
+    private int userId;
 
     @Column(unique = true, nullable = false, length = 50)
     private String username;
@@ -19,10 +20,10 @@ public class User {
     @Column(unique = true, nullable = false, length = 100)
     private String email;
 
-    @Column(name = "FirstName", nullable = false, length = 50)
+    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
-    @Column(name = "LastName", nullable = false, length = 50)
+    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
     @Column(length = 20)
@@ -35,12 +36,12 @@ public class User {
         // Default constructor
     }
 
-    public int getUserID() {
-        return userID;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {

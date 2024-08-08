@@ -2,6 +2,7 @@ package com.siva.AirlineReservationSystem.service;
 
 import com.siva.AirlineReservationSystem.controller.ResourceNotFoundException;
 import com.siva.AirlineReservationSystem.entity.Airline;
+import com.siva.AirlineReservationSystem.entity.Flight;
 import com.siva.AirlineReservationSystem.repository.AirlineRepository;
 import com.siva.AirlineReservationSystem.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class AirlineService {
         Airline airline = getAirlineById(id).orElseThrow(() -> new ResourceNotFoundException("Airline not found for this id :: " + id));
 
         // Check if there are any flights associated with this airline
-        List<Integer> flightIds = flightRepository.findFlightIdsByAirlineId(id);
+        List<Flight> flightIds = flightRepository.findByAirline_AirlineID(id);
         if (!flightIds.isEmpty()) {
             throw new RuntimeException("Cannot delete airline with existing flights. Please delete associated flights first.");
         }

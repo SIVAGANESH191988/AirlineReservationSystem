@@ -18,6 +18,7 @@ public class Localization {
     @Column(nullable = false)
     private String language;
 
+    
     @Column(nullable = false)
     private String currency;
 

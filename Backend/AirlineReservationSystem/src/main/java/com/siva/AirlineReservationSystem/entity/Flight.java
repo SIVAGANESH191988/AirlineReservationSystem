@@ -1,11 +1,12 @@
 package com.siva.AirlineReservationSystem.entity;
 
+import jakarta.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Flights")
@@ -39,67 +40,82 @@ public class Flight {
     @Column(nullable = false)
     private int availableSeats;
 
-    public int getFlightID() {
-        return flightID;
-    }
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "occupied_seats", joinColumns = @JoinColumn(name = "flightID"))
+    @Column(name = "seatNumber")
+    private Set<String> occupiedSeats = new HashSet<>();
 
-    public void setFlightID(int flightID) {
-        this.flightID = flightID;
-    }
+	public int getFlightID() {
+		return flightID;
+	}
 
-    public Airline getAirline() {
-        return airline;
-    }
+	public void setFlightID(int flightID) {
+		this.flightID = flightID;
+	}
 
-    public void setAirline(Airline airline) {
-        this.airline = airline;
-    }
+	public Airline getAirline() {
+		return airline;
+	}
 
-    public String getDepartureCity() {
-        return departureCity;
-    }
+	public void setAirline(Airline airline) {
+		this.airline = airline;
+	}
 
-    public void setDepartureCity(String departureCity) {
-        this.departureCity = departureCity;
-    }
+	public List<Booking> getBookings() {
+		return bookings;
+	}
 
-    public String getArrivalCity() {
-        return arrivalCity;
-    }
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
+	}
 
-    public void setArrivalCity(String arrivalCity) {
-        this.arrivalCity = arrivalCity;
-    }
+	public String getDepartureCity() {
+		return departureCity;
+	}
 
-    public Date getDepartureTime() {
-        return departureTime;
-    }
+	public void setDepartureCity(String departureCity) {
+		this.departureCity = departureCity;
+	}
 
-    public void setDepartureTime(Date departureTime) {
-        this.departureTime = departureTime;
-    }
+	public String getArrivalCity() {
+		return arrivalCity;
+	}
 
-    public int getTotalSeats() {
-        return totalSeats;
-    }
+	public void setArrivalCity(String arrivalCity) {
+		this.arrivalCity = arrivalCity;
+	}
 
-    public void setTotalSeats(int totalSeats) {
-        this.totalSeats = totalSeats;
-    }
+	public Date getDepartureTime() {
+		return departureTime;
+	}
 
-    public int getAvailableSeats() {
-        return availableSeats;
-    }
+	public void setDepartureTime(Date departureTime) {
+		this.departureTime = departureTime;
+	}
 
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
-    }
+	public int getTotalSeats() {
+		return totalSeats;
+	}
 
-    public List<Booking> getBookings() {
-        return bookings;
-    }
+	public void setTotalSeats(int totalSeats) {
+		this.totalSeats = totalSeats;
+	}
 
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
+	public int getAvailableSeats() {
+		return availableSeats;
+	}
+
+	public void setAvailableSeats(int availableSeats) {
+		this.availableSeats = availableSeats;
+	}
+
+	public Set<String> getOccupiedSeats() {
+		return occupiedSeats;
+	}
+
+	public void setOccupiedSeats(Set<String> occupiedSeats) {
+		this.occupiedSeats = occupiedSeats;
+	}
+
+    // Getters and Setters
 }

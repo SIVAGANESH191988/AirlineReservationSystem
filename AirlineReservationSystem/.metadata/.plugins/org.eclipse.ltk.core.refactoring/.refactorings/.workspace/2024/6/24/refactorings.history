@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;my-spring-boot-app&apos; to &apos;AirlineReservationSystem&apos;" description="Rename resource &apos;my-spring-boot-app&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/my-spring-boot-app" name="AirlineReservationSystem" stamp="1718256109657" updateReferences="true"/>
-</session>

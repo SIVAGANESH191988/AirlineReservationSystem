@@ -9,6 +9,7 @@ import com.siva.AirlineReservationSystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -23,17 +24,17 @@ public class BookingService {
     @Autowired
     private FlightRepository flightRepository;
 
-    public Booking createBooking(Integer userID, Integer flightID, Booking bookingDetails) {
-        User user = userRepository.findById(userID)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public Booking createBooking(int userId, Integer flightId, Booking booking) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        Optional<Flight> flightOpt = flightRepository.findById(flightId);
 
-        Flight flight = flightRepository.findById(flightID)
-                .orElseThrow(() -> new RuntimeException("Flight not found"));
-
-        bookingDetails.setUser(user);
-        bookingDetails.setFlight(flight);
-        bookingDetails.setBookingDate(new java.util.Date());
-
-        return bookingRepository.save(bookingDetails);
+        if (userOpt.isPresent() && flightOpt.isPresent()) {
+            booking.setUser(userOpt.get());
+            booking.setFlight(flightOpt.get());
+            booking.setBookingDate(new Date());
+            return bookingRepository.save(booking);
+        } else {
+            throw new RuntimeException("User or Flight not found");
+        }
     }
 }

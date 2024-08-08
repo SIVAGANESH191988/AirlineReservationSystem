@@ -23,6 +23,9 @@ public class FlightService {
     @Autowired
     private BookingRepository bookingRepository;
 
+    @Autowired
+    private UserService userService;
+
     public List<Flight> getFlightsByAirline(Airline airline) {
         return flightRepository.findByAirline(airline);
     }
@@ -80,5 +83,23 @@ public class FlightService {
         }
 
         flightRepository.delete(flight);
+    }
+
+    // Token validation method
+    public boolean validateToken(String token) {
+        return userService.validateToken(token);
+    }
+
+    // Check if seat is available
+    public boolean isSeatAvailable(Flight flight, String seatNumber) {
+        return !flight.getOccupiedSeats().contains(seatNumber);
+    }
+
+    // Occupy a seat
+    @Transactional
+    public void occupySeat(Flight flight, String seatNumber) {
+        flight.getOccupiedSeats().add(seatNumber);
+        flight.setAvailableSeats(flight.getAvailableSeats() - 1);
+        flightRepository.save(flight);
     }
 }

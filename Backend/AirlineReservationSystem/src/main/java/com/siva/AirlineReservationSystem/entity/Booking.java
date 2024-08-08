@@ -1,38 +1,40 @@
 package com.siva.AirlineReservationSystem.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Bookings")
+@Table(name = "Bookings") // Ensure this matches your database table name
 public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bookingID") // Optional: ensure column name matches
     private Long bookingID;
 
     @ManyToOne
-    @JoinColumn(name = "userID", nullable = false)
+    @JoinColumn(name = "userID", nullable = false) // Ensure column name matches database schema
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "flightID", nullable = false)
+    @JoinColumn(name = "flightID", nullable = false) // Ensure column name matches database schema
     private Flight flight;
 
-    @Column(nullable = false)
+    @Column(name = "cabinClass", nullable = false) // Optional: ensure column name matches
     private String cabinClass;
 
-    @Column(nullable = false)
+    @Column(name = "seatNumber", nullable = false) // Optional: ensure column name matches
     private String seatNumber;
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "bookingDate", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP) // Use TIMESTAMP for Date in SQL
     private Date bookingDate;
 
-    @Column(nullable = false)
+    @Column(name = "paymentStatus", nullable = false) // Optional: ensure column name matches
     private String paymentStatus;
-
+    public Booking(Long bookingID) {
+        this.bookingID = bookingID;
+    }
     // Getters and Setters
     public Long getBookingID() {
         return bookingID;

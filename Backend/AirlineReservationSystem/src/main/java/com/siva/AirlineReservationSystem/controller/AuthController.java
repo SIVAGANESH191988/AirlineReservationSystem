@@ -43,9 +43,20 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
         User user = userService.authenticate(username, password);
         if (user != null) {
-            return ResponseEntity.ok("Login successful");
+            String token = userService.generateToken(user);
+            return ResponseEntity.ok(token);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String token) {
+        if (userService.validateToken(token)) {
+            userService.invalidateToken(token);
+            return ResponseEntity.ok("Logout successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
         }
     }
 

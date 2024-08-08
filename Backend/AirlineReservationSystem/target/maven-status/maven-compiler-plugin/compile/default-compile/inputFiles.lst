@@ -17,11 +17,9 @@ D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\Airl
 D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\controller\PaymentController.java
 D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\repository\FlightRepository.java
 D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\repository\UserRepository.java
-D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\entity\FlightStatus.java
 D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\service\PaymentService.java
 D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\entity\Admin.java
 D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\controller\BookingController.java
-D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\repository\FlightStatusRepository.java
 D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\entity\UserPreferences.java
 D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\entity\User.java
 D:\AirlineReservationSystem\src\main\java\com\siva\AirlineReservationSystem\repository\LocalizationRepository.java

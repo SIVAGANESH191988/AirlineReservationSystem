@@ -17,6 +17,7 @@ public class PaymentService {
     public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
     }
+    
 
     public Optional<Payment> getPaymentById(int id) {
         return paymentRepository.findById(id);
@@ -27,8 +28,9 @@ public class PaymentService {
     }
 
     public Optional<Payment> updatePayment(int id, Payment paymentDetails) {
-        return paymentRepository.findById(id).map(payment -> {
-            payment.setBooking(paymentDetails.getBooking());
+        return paymentRepository
+
+        		findById(id).map(payment -> {
             payment.setPaymentMethod(paymentDetails.getPaymentMethod());
             payment.setAmount(paymentDetails.getAmount());
             payment.setPaymentDate(paymentDetails.getPaymentDate());
@@ -37,9 +39,10 @@ public class PaymentService {
     }
 
     public boolean deletePayment(int id) {
-        return paymentRepository.findById(id).map(payment -> {
-            paymentRepository.delete(payment);
+        if (paymentRepository.existsById(id)) {
+            paymentRepository.deleteById(id);
             return true;
-        }).orElse(false);
+        }
+        return false;
     }
 }

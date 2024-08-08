@@ -1,5 +1,6 @@
 package com.siva.AirlineReservationSystem.controller;
 
+import com.siva.AirlineReservationSystem.entity.Booking;
 import com.siva.AirlineReservationSystem.entity.Payment;
 import com.siva.AirlineReservationSystem.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,17 @@ public class PaymentController {
     @PostMapping
     public ResponseEntity<Payment> makePayment(@RequestBody Payment payment) {
         Payment savedPayment = paymentService.savePayment(payment);
+        return ResponseEntity.ok(savedPayment);
+    }
+
+    @PostMapping("/pay/{bookingID}")
+    public ResponseEntity<Payment> makePaymentForBooking(
+            @PathVariable Long bookingID,
+            @RequestBody Payment paymentDetails) {
+
+        // Associate the payment with the booking
+        paymentDetails.setBooking(new Booking(bookingID)); // Assuming a Booking constructor that takes ID
+        Payment savedPayment = paymentService.savePayment(paymentDetails);
         return ResponseEntity.ok(savedPayment);
     }
 
