@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface FlightRepository extends JpaRepository<Flight, Integer> {
+public interface FlightRepository extends JpaRepository<Flight, Float> {
     
     List<Flight> findByDepartureCityAndArrivalCityAndDepartureTimeBetween(String departureCity, String arrivalCity, Date startDate, Date endDate);
 
