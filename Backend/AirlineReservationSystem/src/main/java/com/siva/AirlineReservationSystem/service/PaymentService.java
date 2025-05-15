@@ -27,16 +27,15 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    public Optional<Payment> updatePayment(int id, Payment paymentDetails) {
-        return paymentRepository
-
-        		findById(id).map(payment -> {
+    public Payment updatePayment(int id, Payment paymentDetails) {
+        return paymentRepository.findById(id).map(payment -> {
             payment.setPaymentMethod(paymentDetails.getPaymentMethod());
             payment.setAmount(paymentDetails.getAmount());
             payment.setPaymentDate(paymentDetails.getPaymentDate());
             return paymentRepository.save(payment);
-        });
+        }).orElseThrow(() -> new RuntimeException("Payment not found with id: " + id));
     }
+
 
     public boolean deletePayment(int id) {
         if (paymentRepository.existsById(id)) {

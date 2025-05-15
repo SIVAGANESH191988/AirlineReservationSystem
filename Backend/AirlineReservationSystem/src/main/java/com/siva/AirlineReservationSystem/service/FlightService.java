@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @Service
 public class FlightService {
+
     @Autowired
     private FlightRepository flightRepository;
 
@@ -31,7 +32,7 @@ public class FlightService {
     }
 
     public List<Integer> getFlightIdsByAirlineId(int airlineId) {
-        return flightRepository.findFlightIdsByAirlineId(airlineId);
+        return flightRepository.findFlightIdsByAirline_AirlineID(airlineId); // Updated method name
     }
 
     public List<Flight> getAllFlights() {
@@ -85,21 +86,18 @@ public class FlightService {
         flightRepository.delete(flight);
     }
 
-    // Token validation method
     public boolean validateToken(String token) {
         return userService.validateToken(token);
     }
 
-    // Check if seat is available
     public boolean isSeatAvailable(Flight flight, String seatNumber) {
         return !flight.getOccupiedSeats().contains(seatNumber);
     }
 
-    // Occupy a seat
     @Transactional
     public void occupySeat(Flight flight, String seatNumber) {
         flight.getOccupiedSeats().add(seatNumber);
-        flight.setAvailableSeats(flight.getAvailableSeats() - 1);
+        flight.setAvailableSeats(flight.getAvailableSeats() - 1); // Already correct
         flightRepository.save(flight);
     }
 }

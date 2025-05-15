@@ -47,9 +47,14 @@ public class PaymentController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Payment> updatePayment(@PathVariable int id, @RequestBody Payment paymentDetails) {
-        Optional<Payment> updatedPayment = paymentService.updatePayment(id, paymentDetails);
-        return updatedPayment.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        try {
+            Payment updatedPayment = paymentService.updatePayment(id, paymentDetails);
+            return ResponseEntity.ok(updatedPayment);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePayment(@PathVariable int id) {
